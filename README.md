@@ -82,18 +82,19 @@ npm start
 ### Project Structure
 ```
 openclaw-dashboard/
-├── app/                    # Next.js 15 App Router
-│   ├── layout.tsx         # Root layout with sidebar
-│   ├── page.tsx           # Dashboard homepage
-│   └── globals.css        # Cyberpunk theme styles
-├── components/
-│   ├── sidebar.tsx        # Navigation sidebar
-│   └── ui/               # Reusable UI components
-│       ├── card.tsx      # Glass panel cards
-│       └── button.tsx    # Neon buttons
-├── lib/
-│   ├── data.ts           # Mock data & types
-│   └── utils.ts          # Utility functions
+├── src/
+│   ├── app/               # Next.js App Router
+│   │   ├── layout.tsx     # Root layout with sidebar
+│   │   ├── page.tsx       # Dashboard homepage
+│   │   └── globals.css    # Cyberpunk theme styles
+│   ├── components/
+│   │   ├── sidebar.tsx    # Navigation sidebar
+│   │   └── ui/            # Reusable UI components
+│   │       ├── card.tsx   # Glass panel cards
+│   │       └── button.tsx # Neon buttons
+│   └── lib/
+│       ├── data.ts        # Mock data & types
+│       └── utils.ts       # Utility functions
 └── public/               # Static assets
 ```
 
@@ -136,9 +137,9 @@ openclaw-dashboard/
 ## 🔧 Development
 
 ### Adding New Modules
-1. Create a new route in `app/(module-name)/page.tsx`
-2. Add the module to the sidebar in `components/sidebar.tsx`
-3. Define types in `lib/data.ts` if needed
+1. Create a new route in `src/app/(module-name)/page.tsx`
+2. Add the module to the sidebar in `src/components/sidebar.tsx`
+3. Define types in `src/lib/data.ts` if needed
 4. Implement Server Actions for data mutations
 
 ### Styling Guidelines
