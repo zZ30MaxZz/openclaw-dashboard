@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: rgba(20, 20, 30, 0.8);
+  --card-foreground: #ffffff;
+  --primary: #00f3ff;
+  --primary-foreground: #000000;
+  --secondary: #9d00ff;
+  --secondary-foreground: #ffffff;
+  --accent: #ff00ff;
+  --accent-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: #888888;
+  --border: rgba(0, 243, 255, 0.3);
+  --ring: rgba(157, 0, 255, 0.5);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-lg: 0.5rem;
+  --radius-md: 0.375rem;
+  --radius-sm: 0.25rem;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 243, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(157, 0, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(to bottom right, transparent 49.5%, rgba(255, 0, 255, 0.03) 50%, transparent 50.5%);
+  background-size: 100px 100px, 150px 150px, 100% 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Cyberpunk scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--primary), var(--accent));
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 15px var(--primary), 0 0 30px rgba(0, 243, 255, 0.3);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 15px var(--secondary), 0 0 30px rgba(157, 0, 255, 0.3);
+}
+
+.glow-accent {
+  box-shadow: 0 0 15px var(--accent), 0 0 30px rgba(255, 0, 255, 0.3);
+}
+
+/* Glass effect */
+.glass-panel {
+  backdrop-filter: blur(10px);
+  background: rgba(20, 20, 30, 0.7);
+  border: 1px solid var(--border);
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(0, 243, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
 }
