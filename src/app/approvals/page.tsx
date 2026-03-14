@@ -37,14 +37,15 @@ const priorityFilters: Array<{ id: 'all' | ApprovalPriority; label: string }> = 
 ];
 
 type PageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     priority?: ApprovalPriority | 'all';
-  };
+  }>;
 };
 
 export default async function ApprovalsPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const approvals = await getApprovals();
-  const selectedPriority = (searchParams?.priority ?? 'all') as 'all' | ApprovalPriority;
+  const selectedPriority = (resolvedSearchParams?.priority ?? 'all') as 'all' | ApprovalPriority;
 
   const pending = approvals.filter(
     (approval) =>

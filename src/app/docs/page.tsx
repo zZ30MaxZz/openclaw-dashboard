@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getDocuments, getDocumentCounts } from '@/lib/docs-store';
-import { createDocumentAction, deleteDocumentAction } from './actions';
+import { createDocumentAction, deleteDocumentAction, searchDocumentsAction } from './actions';
 import { FileText, Search, BookOpen, Code, GraduationCap, HelpCircle, Plus, Trash2, Tag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -12,10 +12,26 @@ const categoryConfig = {
   faq: { color: 'text-yellow-400', bg: 'bg-yellow-400/10', icon: <HelpCircle className="w-4 h-4" />, label: 'FAQ' },
 };
 
-export default async function DocsPage() {
-  const docs = await getDocuments();
+type DocsPageProps = {
+  searchParams?: Promise<{
+    query?: string;
+  }>;
+};
+
+export default async function DocsPage({ searchParams }: DocsPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const query = resolvedSearchParams?.query?.trim().toLowerCase() || '';
+  const allDocs = await getDocuments();
+  const docs = query
+    ? allDocs.filter((doc) =>
+        [doc.title, doc.description, doc.content, doc.author, ...doc.tags]
+          .join(' ')
+          .toLowerCase()
+          .includes(query),
+      )
+    : allDocs;
   const categoryCounts = await getDocumentCounts();
-  const totalDocs = docs.length;
+  const totalDocs = allDocs.length;
 
   return (
     <div className="p-6 lg:p-8 grid-bg min-h-screen space-y-8">
@@ -67,11 +83,12 @@ export default async function DocsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form action={createDocumentAction} className="space-y-4">
+            <form action={searchDocumentsAction} className="space-y-4">
               <input
                 type="text"
                 name="query"
                 placeholder="Search by title, description, or tags..."
+                defaultValue={resolvedSearchParams?.query ?? ''}
                 className="w-full p-3 rounded-lg bg-muted/50 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
               <button
@@ -123,7 +140,7 @@ export default async function DocsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-primary" />
-            All Documents ({totalDocs})
+            {query ? `Search Results (${docs.length})` : `All Documents (${totalDocs})`}
           </CardTitle>
         </CardHeader>
         <CardContent>

@@ -19,17 +19,18 @@ import {
 } from 'lucide-react';
 
 interface PageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     week?: string;
-  };
+  }>;
 }
 
 export default async function CalendarPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const events = getEvents();
   const tasks = getTasks();
   const approvals = getApprovals();
 
-  const weekOffset = Number(searchParams?.week ?? 0);
+  const weekOffset = Number(resolvedSearchParams?.week ?? 0);
   const today = new Date();
   const weekStart = startOfWeek(addDays(today, weekOffset * 7));
   const weekDays = Array.from({ length: 7 }, (_, idx) => addDays(weekStart, idx));
@@ -206,7 +207,7 @@ export default async function CalendarPage({ searchParams }: PageProps) {
           </CardHeader>
           <CardContent className="space-y-3 text-sm">
             <p className="text-muted-foreground">{tasks.filter((task) => task.status === 'running').length} tareas en ejecución sincronizadas.</p>
-            <p className="text-muted-foreground">{tasks.filter((task) => task.status === 'queue').length} tareas en cola dentro del horizonte semanal.</p>
+            <p className="text-muted-foreground">{tasks.filter((task) => task.status === 'queued').length} tareas en cola dentro del horizonte semanal.</p>
           </CardContent>
         </Card>
         <Card className="glass-panel border border-border/60">

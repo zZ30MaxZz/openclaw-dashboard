@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getProjects, ProjectRecord } from '@/lib/project-store';
 import { getTasks } from '@/lib/task-store';
-import { getAgentsWithLogs } from '@/lib/agent-store';
+import { getAgents } from '@/lib/agent-store';
 import {
   createProjectAction,
   updateProjectAction,
@@ -24,7 +24,7 @@ import {
 export default function ProjectsPage() {
   const projects = getProjects();
   const tasks = getTasks();
-  const agents = getAgentsWithLogs();
+  const agents = getAgents();
 
   const statusCounts = {
     'on-track': projects.filter((project) => project.status === 'on-track').length,

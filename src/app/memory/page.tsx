@@ -16,14 +16,15 @@ import {
 } from 'lucide-react';
 
 interface PageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     query?: string;
-  };
+  }>;
 }
 
 export default async function MemoryPage({ searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const state = await getMemoryState();
-  const query = searchParams?.query?.trim() ?? '';
+  const query = resolvedSearchParams?.query?.trim() ?? '';
   const results = query ? searchMemories(query) : [];
   const usagePercent = Math.round((state.usage.used / state.usage.total) * 100);
 
